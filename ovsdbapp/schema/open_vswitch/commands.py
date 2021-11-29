@@ -411,7 +411,7 @@ class OvsGetExternalIdCommand(command.ReadOnlyCommand):
         self.field = field
 
     def run_idl(self, txn):
-        row = idlutils.row_by_record(
+        row = idlutils.row_by_value(
             self.api.idl, 'Open_vSwitch', 'ssl', [])
         self.result = row.external_ids[self.field]
 
