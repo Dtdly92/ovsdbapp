@@ -61,12 +61,12 @@ class Backend(object):
 
     @property
     def ovsdb_connection(self):
-        return self.__class__._ovsdb_connection
+        return self._ovsdb_connection
 
     @ovsdb_connection.setter
     def ovsdb_connection(self, connection):
-        if self.__class__._ovsdb_connection is None:
-            self.__class__._ovsdb_connection = connection
+        if self._ovsdb_connection is None:
+            self._ovsdb_connection = connection
 
     def create_index(self, table, *columns):
         """Create a multi-column index on a table

@@ -137,6 +137,9 @@ class OvsdbIdl(ovs_idl.Backend, api.API):
     def set_fail_mode(self, bridge, mode):
         return cmd.SetFailModeCommand(self, bridge, mode)
 
+    def set_stp_enable(self, bridge, enable):
+        return cmd.SetStpEnableCommand(self, bridge, enable)
+
     def add_port(self, bridge, port, may_exist=True):
         return cmd.AddPortCommand(self, bridge, port, may_exist)
 
@@ -154,3 +157,9 @@ class OvsdbIdl(ovs_idl.Backend, api.API):
 
     def iface_set_external_id(self, name, field, value):
         return cmd.IfaceSetExternalIdCommand(self, name, field, value)
+
+    def ovs_get_external_id(self, field):
+        return cmd.OvsGetExternalIdCommand(self, field)
+
+    def ovs_set_external_id(self, field, value):
+        return cmd.OvsSetExternalIdCommand(self, field, value)

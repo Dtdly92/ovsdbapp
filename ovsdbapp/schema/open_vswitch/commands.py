@@ -210,6 +210,15 @@ class SetFailModeCommand(BaseCommand):
         br = idlutils.row_by_value(self.api.idl, 'Bridge', 'name', self.bridge)
         br.fail_mode = self.mode
 
+class SetStpEnableCommand(BaseCommand):
+    def __init__(self, api, bridge, enable):
+        super().__init__(api)
+        self.bridge = bridge
+        self.enable = enable
+
+    def run_idl(self, txn):
+        br = idlutils.row_by_value(self.api.idl, 'Bridge', 'name', self.bridge)
+        br.stp_enable = self.enable
 
 class AddPortCommand(command.AddCommand):
     table_name = 'Port'
@@ -395,3 +404,26 @@ class IfaceSetExternalIdCommand(SetExternalIdCommand):
     def __init__(self, api, name, field, value):
         super().__init__(
             api, 'Interface', name, field, value)
+
+class OvsGetExternalIdCommand(command.ReadOnlyCommand):
+    def __init__(self, api, field):
+        super().__init__(api)
+        self.field = field
+
+    def run_idl(self, txn):
+        row = idlutils.row_by_record(
+            self.api.idl, 'Open_vSwitch', 'ssl', [])
+        self.result = row.external_ids[self.field]
+
+class OvsSetExternalIdCommand(BaseCommand):
+    def __init__(self, api, field, value):
+        super().__init__(api)
+        self.field = field
+        self.value = value
+
+    def run_idl(self, txn):
+        row = idlutils.row_by_value(
+            self.api.idl, 'Open_vSwitch', 'ssl', [])
+        external_ids = getattr(row, 'external_ids', {})
+        external_ids[self.field] = self.value
+        row.external_ids = external_ids

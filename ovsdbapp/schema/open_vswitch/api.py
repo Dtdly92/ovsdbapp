@@ -171,6 +171,17 @@ class API(api.API, metaclass=abc.ABCMeta):
         """
 
     @abc.abstractmethod
+    def set_stp_enable(self, bridge, enable):
+        """Create a command to set an OVS bridge's stp enable
+
+        :param bridge: The name of the bridge
+        :type bridge:  string
+        :param enable:   The stp enable
+        :type enable:    bool
+        :returns:      :class:`Command` with no result
+        """
+
+    @abc.abstractmethod
     def add_port(self, bridge, port, may_exist=True):
         """Create a command to add a port to an OVS bridge
 
@@ -237,3 +248,24 @@ class API(api.API, metaclass=abc.ABCMeta):
         :type value:  string
         :returns:     :class:`Command` with field no result
         """
+
+    @abc.abstractmethod
+    def ovs_get_external_id(self, field):
+        """Create a command to return a field from the Open_vSwitch's external_ids
+
+        :param field: The external_ids field to return
+        :type field:  string
+        :returns:     :class:`Command` with field value result
+        """
+
+    @abc.abstractmethod
+    def ovs_set_external_id(self, field, value):
+        """Create a command to set the OVS Open_vSwitch's external_ids
+
+        :param field: The external_ids field to set
+        :type field:  string
+        :param value: The external_ids value to set
+        :type value:  string
+        :returns:     :class:`Command` with field no result
+        """
+
