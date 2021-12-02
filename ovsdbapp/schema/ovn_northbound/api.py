@@ -1206,3 +1206,23 @@ class API(api.API, metaclass=abc.ABCMeta):
         :type meter:   string or uuid.UUID
         :returns:      :class:`Command` with RowView result
         """
+
+    @abc.abstractmethod
+    def ovn_set_options(self, field, value): #TODO, bugs        
+        """Set options related to the type of 'port'
+
+        :param port:    The name or uuid of the port
+        :type port:     string or uuid.UUID
+        :param options: keys and values for the port 'options' dict
+        :type options:  key: string, value: string
+        :returns:       :class:`Command` with no result
+        """
+
+    @abc.abstractmethod
+    def ovn_get_options(self,fileld):
+        """Get the type-specific options for 'port'
+
+        :param port: The name or uuid of the port
+        :type port:  string or uuid.UUID
+        :returns:    :class:`Command` with dict result
+        """

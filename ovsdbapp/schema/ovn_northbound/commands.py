@@ -1701,3 +1701,26 @@ class MeterListCommand(cmd.ReadOnlyCommand):
 
 class MeterGetCommand(cmd.BaseGetRowCommand):
     table = 'Meter'
+
+class OvnGetOptionsCommand(cmd.ReadOnlyCommand):
+    def __init__(self, api, field):
+        super().__init__(api)
+        self.field = field
+
+    def run_idl(self, txn):
+        row = idlutils.row_by_value(
+            self.api.idl, 'NB_Global', 'ssl', [])
+        self.result = row.options[self.field]
+
+class OvnSetOptionsCommand(cmd.BaseCommand):
+    def __init__(self, api, field, value):
+        super().__init__(api)
+        self.field = field
+        self.value = value
+
+    def run_idl(self, txn):
+        row = idlutils.row_by_value(
+            self.api.idl, 'NB_Global', 'ssl', [])
+        options = getattr(row, 'options', {})
+        options[self.field] = self.value
+        row.options = options

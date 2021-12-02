@@ -361,3 +361,9 @@ class OvnNbApiIdlImpl(ovs_idl.Backend, api.API):
 
     def meter_get(self, meter):
         return cmd.MeterGetCommand(self, meter)
+
+    def ovn_set_options(self, field, value):
+        return cmd.OvnSetOptionsCommand(self, field, value)
+
+    def ovn_get_options(self,field):
+        return cmd.OvnGetOptionsCommand(self,field)
